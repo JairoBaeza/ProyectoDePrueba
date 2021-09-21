@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using ProyectoDePrueba.Repositorios;
@@ -45,6 +46,10 @@ namespace ProyectoDePrueba.Pages
                 bool resultado = repo.UsuarioExiste(usuario, password);
                 if (resultado == true)
                 {
+                    //Asignarle la sesion   
+                    Guid guidSession = Guid.NewGuid();
+                    HttpContext.Session.SetString("idSession", guidSession.ToString());
+
                     return RedirectToPage("./Home");
                 }
                 else
